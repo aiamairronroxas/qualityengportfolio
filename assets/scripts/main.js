@@ -1,12 +1,14 @@
-// main.js: runs in the browser and adds two small features.
+// main.js: shows one section at a time and handles the phone menu.
 
-// ---- 1. Phone menu: the "Menu" button opens and closes the sidebar menu ----
 const sidebar = document.getElementById("sidebar");
 const menuToggle = document.getElementById("menu-toggle");
+const navLinks = document.querySelectorAll(".nav a");
+const panels = document.querySelectorAll(".panel");
 
+// ---- 1. Phone menu: the "Menu" button opens and closes the sidebar menu ----
 function setMenu(open) {
-  sidebar.classList.toggle("is-open", open);          // CSS shows/hides the menu
-  menuToggle.setAttribute("aria-expanded", open);      // tells screen readers the state
+  sidebar.classList.toggle("is-open", open);
+  menuToggle.setAttribute("aria-expanded", open);
   menuToggle.textContent = open ? "Close" : "Menu";
 }
 
@@ -14,26 +16,38 @@ menuToggle.addEventListener("click", () => {
   setMenu(!sidebar.classList.contains("is-open"));
 });
 
-// Close the menu after tapping a menu link (so it doesn't cover the page)
-document.querySelectorAll(".nav a").forEach((link) => {
-  link.addEventListener("click", () => setMenu(false));
+// ---- 2. Show one section, hide the others ----
+function showPanel(id) {
+  // If the id doesn't match a section, fall back to the hero
+  if (!document.getElementById(id)) id = "hero";
+
+  panels.forEach((panel) => {
+    panel.classList.toggle("is-active", panel.id === id);
+  });
+
+  // Highlight the matching sidebar link
+  navLinks.forEach((link) => {
+    link.classList.toggle("is-active", link.getAttribute("href") === "#" + id);
+  });
+
+  window.scrollTo(0, 0);   // start each section at the top
+}
+
+// ---- 3. Clicks on any in-page link (sidebar and hero buttons) ----
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();                       // stop the normal jump/scroll
+    const id = link.getAttribute("href").slice(1);
+    showPanel(id);
+    history.pushState(null, "", "#" + id);        // keeps the Back button working
+    setMenu(false);                               // close the phone menu
+  });
 });
 
-// ---- 2. Highlight the menu link of the section you're viewing ----
-const navLinks = document.querySelectorAll(".nav a");
-const sections = document.querySelectorAll("main section[id]");
+// Back/Forward buttons
+window.addEventListener("popstate", () => {
+  showPanel(location.hash.slice(1) || "hero");
+});
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        navLinks.forEach((link) => {
-          link.classList.toggle("is-active", link.getAttribute("href") === "#" + entry.target.id);
-        });
-      }
-    });
-  },
-  { rootMargin: "-40% 0px -50% 0px" } // counts a section as "current" near mid-screen
-);
-
-sections.forEach((section) => observer.observe(section));
+// ---- 4. On page load, open the section named in the address (or the hero) ----
+showPanel(location.hash.slice(1) || "hero");
