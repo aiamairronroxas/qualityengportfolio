@@ -8,11 +8,27 @@
   --color-tint: #EDEDE5;         /* hover / active menu background */
   --color-accent: #C2410C;       /* buttons and highlights (orange) */
   --color-accent-dark: #9A3412;  /* hover and active text */
+  --color-on-accent: #FFFFFF;    /* text color on orange buttons */
 
   --font-main: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-  --sidebar-width: 320px;        /* was 280px: wider sidebar */
+  --sidebar-width: 320px;
   --radius: 24px;
   --shadow: 0 12px 32px -16px rgba(15, 35, 71, 0.25);
+}
+
+/* ===== DARK MODE COLORS (used when the moon button is on) ===== */
+:root[data-theme="dark"] {
+  --color-bg: #0E1626;           /* page background (deep navy) */
+  --color-surface: #152036;      /* sidebar and cards */
+  --color-text: #E8ECF4;         /* main text */
+  --color-muted: #9AA6BD;        /* secondary text */
+  --color-border: #26334D;       /* thin lines */
+  --color-tint: #1E2B45;         /* hover / active menu background */
+  --color-accent: #FB923C;       /* orange, lighter so it reads on dark */
+  --color-accent-dark: #FDBA74;  /* hover and active text */
+  --color-on-accent: #0E1626;    /* text color on orange buttons */
+  --shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
 }
 
 /* ===== 2. BASIC RESET ===== */
@@ -78,17 +94,40 @@ body {
 }
 .sidebar.is-open .sidebar-menu { display: block; }
 
-.social-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-.social-links a {
-  padding: 0.45rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 600;
+/* Icon-only round buttons (links and the dark mode switch) */
+.social-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+.social-links a,
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
   color: var(--color-text);
-  text-decoration: none;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
 }
-.social-links a:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
+.social-links a:hover,
+.theme-toggle:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
+
+.social-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Moon shows in light mode, sun shows in dark mode */
+.icon-sun { display: none; }
+:root[data-theme="dark"] .icon-moon { display: none; }
+:root[data-theme="dark"] .icon-sun { display: block; }
 
 .nav { padding-top: 1rem; border-top: 1px solid var(--color-border); }
 .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
@@ -148,10 +187,10 @@ body {
   white-space: nowrap;
   transition: background-color 0.2s, color 0.2s;
 }
-.btn-primary { background: var(--color-accent); color: #FFFFFF; }
+.btn-primary { background: var(--color-accent); color: var(--color-on-accent); }
 .btn-primary:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
 .btn-secondary { background: transparent; color: var(--color-accent-dark); }
-.btn-secondary:hover { background: var(--color-accent); color: #FFFFFF; }
+.btn-secondary:hover { background: var(--color-accent); color: var(--color-on-accent); }
 
 a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); outline-offset: 3px; }
 
@@ -289,7 +328,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   }
 
   .sidebar-top { flex-direction: column; text-align: center; padding: 2.5rem 1.75rem 1.25rem; }
-  .avatar { width: 168px; height: 168px; }       /* was 128px: bigger photo */
+  .avatar { width: 168px; height: 168px; }       /* bigger photo on desktop */
   .profile-name { font-size: 1.5rem; }
   .profile-role { font-size: 1rem; }
   .menu-toggle { display: none; }
@@ -343,6 +382,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 /* Respect people who turn off animations in their device settings */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .btn, .card { transition: none; }
+  .btn, .card, .social-links a, .theme-toggle { transition: none; }
   .card:hover { transform: none; }
 }

@@ -51,3 +51,26 @@ window.addEventListener("popstate", () => {
 
 // ---- 4. On page load, open the page named in the address (or Home) ----
 showPanel(location.hash.slice(1) || "home");
+
+// ---- 5. Dark mode: the moon/sun button switches the theme and remembers it ----
+const themeToggle = document.getElementById("theme-toggle");
+const root = document.documentElement;
+
+function updateThemeButton() {
+  const isDark = root.getAttribute("data-theme") === "dark";
+  themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+  themeToggle.title = isDark ? "Light mode" : "Dark mode";
+}
+
+themeToggle.addEventListener("click", () => {
+  const goDark = root.getAttribute("data-theme") !== "dark";
+  if (goDark) {
+    root.setAttribute("data-theme", "dark");
+  } else {
+    root.removeAttribute("data-theme");
+  }
+  try { localStorage.setItem("theme", goDark ? "dark" : "light"); } catch (e) {}
+  updateThemeButton();
+});
+
+updateThemeButton();
