@@ -57,7 +57,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-text);
+  background: var(--color-tint);   /* soft cream circle (#EDEDE5) behind the transparent photo */
   color: #FFFFFF;
   font-weight: 700;
 }
