@@ -17,7 +17,6 @@
         <!-- SIDEBAR: left panel on desktop, top bar on phones -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-top">
-                <!-- Profile photo: save your photo as assets/images/profile.png -->
                 <img class="avatar" src="assets/images/profile.png" alt="Photo of Aiam Airron Roxas">
 
                 <div class="profile">
@@ -37,14 +36,21 @@
                     <a href="https://linkedin.com/in/aiamairronroxas" target="_blank" rel="noopener">LinkedIn</a>
                 </div>
 
+                <!-- Menu: each link shows one page (see main.js) -->
                 <nav class="nav" aria-label="Main">
                     <ul>
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#education">Education</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#home" class="is-active">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a></li>
+                        <li><a href="#projects">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</a></li>
+                        <li><a href="#experience">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Experience</a></li>
+                        <li><a href="#certifications">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>Certifications</a></li>
+                        <li><a href="#education">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Education</a></li>
+                        <li><a href="#contact">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact</a></li>
                     </ul>
                 </nav>
 
@@ -52,45 +58,88 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT: every section goes here, one after another -->
+        <!-- MAIN CONTENT: only the panel marked "is-active" is visible -->
         <main class="content" id="main">
 
-            <!-- HERO: add "panel is-active" so it shows first -->
-<section class="hero panel is-active" id="hero">
-                <p class="hero-eyebrow">BS Computer Engineering · Magna Cum Laude</p>
-                <h1 class="hero-headline">Quality Engineer who turns test cases into clear PASS/FAIL results and defect
-                    reports.</h1>
-                <p class="hero-sub">
-                    Hands-on verification, documentation, and troubleshooting experience from my internship
-                    at Nestlé Philippines, with a foundation in test cases, test evidence, SDLC, and Agile.
-                </p>
+            <!-- ===== HOME (dashboard) ===== -->
+            <section class="home panel is-active" id="home">
 
-                <div class="hero-actions">
-                    <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <!-- Opens the resume on Google Drive in a new tab -->
-                    <a href="https://drive.google.com/file/d/11f-Aur3RQykBjBpoe0ahT2WvNUZYC1lV/view?usp=drive_link"
-                        class="btn btn-secondary" target="_blank" rel="noopener">View Resume</a>
+                <div class="home-top">
+                    <div>
+                        <p class="eyebrow">BS Computer Engineering · Magna Cum Laude</p>
+                        <h1 class="home-headline">Quality Engineer who turns test cases into clear PASS/FAIL results and defect reports.</h1>
+                        <p class="home-sub">Hands-on verification, documentation, and troubleshooting experience from my internship at Nestlé Philippines.</p>
+                    </div>
+                    <div class="home-actions">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="https://drive.google.com/file/d/11f-Aur3RQykBjBpoe0ahT2WvNUZYC1lV/view?usp=drive_link"
+                            class="btn btn-secondary" target="_blank" rel="noopener">View Resume</a>
+                    </div>
                 </div>
 
-                <!-- Proof cards: your strongest facts, visible right away -->
-                <div class="stats">
-                    <div class="stat-card">
-                        <p class="stat-value">1,000+</p>
-                        <p class="stat-label">laptops verified during a Windows 11 migration at Nestlé Philippines</p>
-                    </div>
-                    <div class="stat-card">
-                        <p class="stat-value">6 months</p>
-                        <p class="stat-label">IT internship covering verification, issue documentation, and
-                            troubleshooting</p>
-                    </div>
-                    <div class="stat-card">
-                        <p class="stat-value">1.34 GWA</p>
-                        <p class="stat-label">Magna Cum Laude, Bulacan State University</p>
-                    </div>
+                <!-- Skills strip (all taken from the resume) -->
+                <div class="skills-strip">
+                    <p class="strip-label">Skills</p>
+                    <ul class="tag-list">
+                        <li>Test Case Development</li>
+                        <li>Test Execution</li>
+                        <li>Bug Reporting</li>
+                        <li>SDLC</li>
+                        <li>Agile / Scrum</li>
+                        <li>SQL</li>
+                        <li>Python</li>
+                        <li>Troubleshooting</li>
+                    </ul>
+                </div>
+
+                <!-- Dashboard cards: each one opens its page -->
+                <div class="bento">
+
+                    <a href="#projects" class="card card-wide">
+                        <p class="card-label">Projects</p>
+                        <p class="card-title">Sample QA work</p>
+                        <ol class="mini-list">
+                            <li><span>Test Plan</span><span class="num">01</span></li>
+                            <li><span>Test Cases with PASS/FAIL results</span><span class="num">02</span></li>
+                            <li><span>Sample Bug Report</span><span class="num">03</span></li>
+                        </ol>
+                    </a>
+
+                    <a href="#experience" class="card">
+                        <p class="card-label">Experience</p>
+                        <p class="card-stat">1,000+</p>
+                        <p class="card-text">laptops verified during a Windows 11 migration at Nestlé Philippines.</p>
+                    </a>
+
+                    <a href="#certifications" class="card">
+                        <p class="card-label">Certifications</p>
+                        <p class="card-stat">8</p>
+                        <p class="card-text">including Data Privacy, Data Recording and Reporting, and Microsoft Digital Literacy.</p>
+                    </a>
+
+                    <a href="#education" class="card">
+                        <p class="card-label">Education</p>
+                        <p class="card-title">BS Computer Engineering</p>
+                        <p class="card-text">Bulacan State University · Magna Cum Laude, 1.34 GWA.</p>
+                    </a>
+
+                    <a href="#contact" class="card">
+                        <p class="card-label">Contact</p>
+                        <p class="card-title">Let's talk</p>
+                        <p class="card-text">Email or LinkedIn. Open to Associate Quality Engineer roles.</p>
+                    </a>
+
                 </div>
             </section>
-            <!-- EXPERIENCE: add "panel" -->
-<section class="section panel" id="experience">
+
+            <!-- ===== PROJECTS (placeholder) ===== -->
+            <section class="section panel" id="projects">
+                <h2 class="section-title">Projects</h2>
+                <p class="placeholder">Coming next: test plan, test cases with PASS/FAIL results, and a sample bug report.</p>
+            </section>
+
+            <!-- ===== EXPERIENCE ===== -->
+            <section class="section panel" id="experience">
                 <h2 class="section-title">Experience</h2>
 
                 <article class="job-card">
@@ -103,20 +152,13 @@
                     </div>
 
                     <ul class="job-list">
-                        <li>Supported the migration of <strong>1,000+ laptops</strong> to Windows 11 by following a
-                            step-by-step checklist, helping the project finish on schedule.</li>
-                        <li>Verified every laptop at each stage of the process and after migration, confirming each unit
-                            worked correctly before handover.</li>
-                        <li>Documented issues found during migration with supporting evidence, giving the IT team a
-                            clear record to review and resolve problems.</li>
-                        <li>Diagnosed hardware and software issues reported by employees, restoring their devices to
-                            working condition.</li>
-                        <li>Assisted the IT custodian in tracking and updating IT inventory records, keeping equipment
-                            information organized and accurate so the team could locate and account for assets quickly.
-                        </li>
+                        <li>Supported the migration of <strong>1,000+ laptops</strong> to Windows 11 by following a step-by-step checklist, helping the project finish on schedule.</li>
+                        <li>Verified every laptop at each stage of the process and after migration, confirming each unit worked correctly before handover.</li>
+                        <li>Documented issues found during migration with supporting evidence, giving the IT team a clear record to review and resolve problems.</li>
+                        <li>Diagnosed hardware and software issues reported by employees, restoring their devices to working condition.</li>
+                        <li>Assisted the IT custodian in tracking and updating IT inventory records, keeping equipment information organized and accurate so the team could locate and account for assets quickly.</li>
                     </ul>
 
-                    <!-- Small tags: the QA skills this role shows -->
                     <ul class="tag-list">
                         <li>Checklist-based verification</li>
                         <li>Issue documentation</li>
@@ -125,6 +167,25 @@
                     </ul>
                 </article>
             </section>
+
+            <!-- ===== CERTIFICATIONS (placeholder) ===== -->
+            <section class="section panel" id="certifications">
+                <h2 class="section-title">Certifications</h2>
+                <p class="placeholder">Coming soon.</p>
+            </section>
+
+            <!-- ===== EDUCATION (placeholder) ===== -->
+            <section class="section panel" id="education">
+                <h2 class="section-title">Education</h2>
+                <p class="placeholder">Coming soon.</p>
+            </section>
+
+            <!-- ===== CONTACT (placeholder) ===== -->
+            <section class="section panel" id="contact">
+                <h2 class="section-title">Contact</h2>
+                <p class="placeholder">Coming soon.</p>
+            </section>
+
         </main>
     </div>
 
