@@ -41,7 +41,7 @@
             <div class="sidebar-menu" id="sidebar-menu">
                                 <!-- Icon-only buttons: Email, GitHub, LinkedIn, and the dark mode switch -->
                 <div class="social-links">
-                    <a href="mailto:aiamroxas.cpe@gmail.com" aria-label="Email" title="Email">
+                    <a href="mailto:aiamroxas.cpe@gmail.com" id="email-button" aria-label="Email" title="Email">
                         <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </a>
                     <a href="https://github.com/aiamairronroxas" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
@@ -209,7 +209,16 @@
 
         </main>
     </div>
-
+        <!-- EMAIL POPUP: opens when the email icon is clicked -->
+    <div class="modal" id="email-modal" hidden role="dialog" aria-modal="true" aria-labelledby="email-modal-title">
+        <div class="modal-box">
+            <button type="button" class="modal-close" id="email-close" aria-label="Close">&times;</button>
+            <h2 class="modal-title" id="email-modal-title">Email me</h2>
+            <p class="modal-text">Click the address to copy it.</p>
+            <button type="button" class="copy-email" id="copy-email">aiamroxas.cpe@gmail.com</button>
+            <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+        </div>
+    </div>
     <script src="assets/scripts/main.js" defer></script>
 </body>
 
