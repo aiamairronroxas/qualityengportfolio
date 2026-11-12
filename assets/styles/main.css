@@ -311,7 +311,70 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .job-dates { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-accent-dark); }
 .job-list { margin: 0 0 1.5rem; padding-left: 1.4rem; font-size: 1.1rem; }
 .job-list li { margin-bottom: 0.8rem; }
+/* ===== 9B. EMAIL POPUP ===== */
+.modal {
+  position: fixed;
+  inset: 0;                         /* covers the whole screen */
+  z-index: 100;                     /* above the sidebar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(15, 35, 71, 0.5); /* dim background */
+}
+.modal[hidden] { display: none; }   /* hidden until the email icon is clicked */
 
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem 1.75rem 1.75rem;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.modal-close {                      /* the exit (X) button */
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.modal-close:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
+
+.modal-title { margin: 0 0 0.5rem; font-size: 1.4rem; }
+.modal-text { margin: 0 0 1.25rem; color: var(--color-muted); }
+
+.copy-email {                       /* the email address you click to copy */
+  font: inherit;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  color: var(--color-accent-dark);
+  background: var(--color-tint);
+  border: 2px dashed var(--color-accent);
+  border-radius: 999px;
+  cursor: pointer;
+  word-break: break-all;
+}
+.copy-email:hover { background: var(--color-bg); }
+
+.copy-status {                      /* shows "Copied!" */
+  min-height: 1.5em;
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
 /* ===== 10. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
 @media (min-width: 1000px) {
   .sidebar {

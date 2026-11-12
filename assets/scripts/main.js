@@ -74,3 +74,54 @@ themeToggle.addEventListener("click", () => {
 });
 
 updateThemeButton();
+// ---- 6. Email popup: opens from the email icon, click the address to copy ----
+const emailButton = document.getElementById("email-button");
+const emailModal = document.getElementById("email-modal");
+const emailClose = document.getElementById("email-close");
+const copyEmail = document.getElementById("copy-email");
+const copyStatus = document.getElementById("copy-status");
+
+function openEmailModal() {
+  emailModal.hidden = false;
+  copyStatus.textContent = "";
+  copyEmail.focus();
+}
+
+function closeEmailModal() {
+  emailModal.hidden = true;
+  emailButton.focus();
+}
+
+emailButton.addEventListener("click", (event) => {
+  event.preventDefault();               // don't open the mail app
+  openEmailModal();
+});
+
+emailClose.addEventListener("click", closeEmailModal);
+
+// Click the dark area outside the box to close
+emailModal.addEventListener("click", (event) => {
+  if (event.target === emailModal) closeEmailModal();
+});
+
+// Press Esc to close
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !emailModal.hidden) closeEmailModal();
+});
+
+// Click the address to copy it
+copyEmail.addEventListener("click", async () => {
+  const email = copyEmail.textContent.trim();
+  try {
+    await navigator.clipboard.writeText(email);
+    copyStatus.textContent = "Copied!";
+  } catch (error) {
+    // Fallback: select the text so the visitor can press Ctrl+C
+    const range = document.createRange();
+    range.selectNodeContents(copyEmail);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    copyStatus.textContent = "Press Ctrl + C to copy";
+  }
+});
