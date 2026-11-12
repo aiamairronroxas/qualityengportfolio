@@ -220,7 +220,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .home-sub { margin: 0; max-width: 64ch; font-size: 1.15rem; color: var(--color-muted); }
 .home-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-/* ===== 7. HOME: skills strip ===== */
+/* ===== 7. HOME: skills and tools strips ===== */
 .skills-strip {
   display: flex;
   flex-wrap: wrap;
@@ -240,7 +240,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   text-transform: uppercase;
   color: var(--color-accent);
 }
-/* ----- Scrolling skills (marquee) ----- */
+
+/* ----- Scrolling strip (marquee) ----- */
 .marquee {
   flex: 1 1 260px;
   min-width: 0;                    /* lets it shrink inside the strip */
@@ -271,7 +272,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   to   { transform: translateX(-50%); }            /* moves left by one full copy */
 }
 
-/* One skill: text on the left, icon on the right */
+/* One skill or tool: icon on the left, text on the right */
 .skill-chip {
   display: flex;
   align-items: center;
@@ -295,13 +296,14 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
 /* Two strips stacked: tighter gap between them */
 .skills-strip:has(+ .skills-strip) { margin-bottom: 0.75rem; }
 
 /* Tools has fewer items, so a shorter time keeps the speed similar to Skills */
 .tools-strip .marquee-track { animation-duration: 32s; }
 
-/* Small rounded labels (used in several places) */
+/* Small rounded labels (used in the Experience card) */
 .tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; }
 .tag-list li {
   padding: 0.35rem 0.9rem;
@@ -372,7 +374,65 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .job-list { margin: 0 0 1.5rem; padding-left: 1.4rem; font-size: 1.1rem; }
 .job-list li { margin-bottom: 0.8rem; }
 
-/* ===== 9B. EMAIL POPUP ===== */
+/* ----- Photo slideshow ----- */
+.slideshow { margin-top: 1.5rem; }
+
+/* Fixed-size frame: every photo, whatever its size, fits inside this box */
+.slide-frame {
+  position: relative;
+  height: clamp(260px, 52vh, 520px);   /* min, preferred, max height */
+  overflow: hidden;
+  background: var(--color-tint);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s;   /* fade speed: smaller = faster */
+}
+.slide.is-active { opacity: 1; visibility: visible; }
+
+/* Blurred, darkened copy of the same photo fills the empty space (main.js sets --bg) */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: -30px;                          /* extra so the blur edges stay hidden */
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(28px) brightness(0.7);
+}
+
+/* The real photo: whole picture visible, never cropped or stretched */
+.slide img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Dots below the photo */
+.slide-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 0.9rem; }
+.slide-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  background: var(--color-border);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.slide-dot:hover { background: var(--color-muted); }
+.slide-dot.is-active { background: var(--color-accent); transform: scale(1.25); }
+
+/* ===== 10. EMAIL POPUP ===== */
 .modal {
   position: fixed;
   inset: 0;                         /* covers the whole screen */
@@ -437,7 +497,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   color: var(--color-accent-dark);
 }
 
-/* ===== 10. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
+/* ===== 11. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
 @media (min-width: 1000px) {
   .sidebar {
     position: fixed;
@@ -497,9 +557,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   .home-sub { font-size: clamp(1rem, 2vh, 1.15rem); }
 
   .skills-strip {
-    padding: clamp(0.7rem, 1.8vh, 1.25rem) 1.75rem;
+    padding: clamp(0.6rem, 1.5vh, 1.25rem) 1.75rem;
     margin-bottom: clamp(0.75rem, 1.8vh, 1.5rem);
   }
+  .skills-strip:has(+ .skills-strip) { margin-bottom: clamp(0.4rem, 1.2vh, 0.75rem); }
 
   /* Cards share the remaining height. Rows never shrink below their content. */
   .bento {
@@ -523,19 +584,21 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   .bento .card:nth-child(5) { grid-column: span 2; }
 }
 
-/* ===== 11. SMALL PHONES ===== */
+/* ===== 12. SMALL PHONES ===== */
 @media (max-width: 480px) {
   .home-actions { width: 100%; }
   .btn { flex: 1; text-align: center; }
 }
 
-/* Respect people who turn off animations in their device settings */
+/* ===== 13. Respect people who turn off animations in their device settings ===== */
 @media (prefers-reduced-motion: reduce) {
-    /* People who turn off animations get a still, wrapped list instead */
-  .marquee-track { animation: none; width: auto; }
-  .marquee-group { flex-wrap: wrap; }
-  .marquee-group[aria-hidden="true"] { display: none; }
   html { scroll-behavior: auto; }
   .btn, .card, .social-links a, .theme-toggle { transition: none; }
   .card:hover { transform: none; }
+  .slide, .slide-dot { transition: none; }
+
+  /* Strips become still, wrapped lists instead of scrolling */
+  .marquee-track { animation: none; width: auto; display: block; }
+  .marquee-group { flex-wrap: wrap; }
+  .marquee-group[aria-hidden="true"] { display: none; }
 }
