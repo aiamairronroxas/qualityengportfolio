@@ -498,6 +498,64 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .cert-meta div { padding: 0.65rem 0; border-top: 1px solid var(--color-border); }
 .cert-meta dt { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); }
 .cert-meta dd { margin: 0.15rem 0 0; word-break: break-all; }   /* long credential IDs wrap instead of overflowing */
+
+/* ===== 9D. EDUCATION PHOTO CAROUSEL ===== */
+.photo-marquee {
+  --photo-h: clamp(240px, 42vh, 420px);   /* card height; the width follows automatically (2:3) */
+  margin-top: 1.5rem;
+  padding: 1.25rem 0;                     /* room for the tilt and shadows */
+  overflow: hidden;
+  /* soft fade on the left and right edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.photo-track {
+  display: flex;
+  width: max-content;
+  animation: photo-scroll 90s linear infinite;   /* bigger number = slower */
+}
+/* Pause while a mouse is over the carousel (not on touch screens, so phones never get stuck) */
+@media (hover: hover) {
+  .photo-marquee:hover .photo-track { animation-play-state: paused; }
+}
+
+/* main.js adds extra copies of this row so the loop never has a gap */
+.photo-group {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+@keyframes photo-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Each photo: a 2:3 portrait card, alternately tilted */
+.photo-card {
+  flex: 0 0 auto;
+  height: var(--photo-h);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: var(--color-tint);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transform: rotate(-2deg) translateY(6px);
+  transition: transform 0.3s ease;
+}
+.photo-card:nth-child(even) { transform: rotate(2deg) translateY(-6px); }
+.photo-card:hover { transform: rotate(0deg) scale(1.04); }   /* straightens and grows on hover */
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 /* ===== 10. EMAIL POPUP ===== */
 .modal {
   position: fixed;
@@ -666,4 +724,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   .marquee-track { animation: none; width: auto; display: block; }
   .marquee-group { flex-wrap: wrap; }
   .marquee-group[aria-hidden="true"] { display: none; }
+    /* Photos become a still row you can scroll sideways by hand */
+  .photo-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .photo-track { animation: none; }
+  .photo-group[aria-hidden="true"] { display: none; }
+  .photo-card, .photo-card:nth-child(even), .photo-card:hover { transition: none; }
 }

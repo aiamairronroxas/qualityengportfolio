@@ -245,3 +245,11 @@ certModal.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !certModal.hidden) closeCertModal();
 });
+// ---- 10. Education photo carousel: make 3 extra copies of the row so the loop never has a gap ----
+document.querySelectorAll(".photo-track").forEach((track) => {
+  for (let i = 0; i < 3; i++) {
+    const copy = track.firstElementChild.cloneNode(true);
+    copy.setAttribute("aria-hidden", "true");   // screen readers skip the duplicates
+    track.appendChild(copy);
+  }
+});
