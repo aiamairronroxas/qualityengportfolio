@@ -47,6 +47,11 @@
         <symbol id="i-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
         <symbol id="i-type" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></symbol>
         <symbol id="i-video" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></symbol>
+                <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+        <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
+        <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+        <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></symbol>
+        <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
     </svg>
 
     <div class="layout">
@@ -279,10 +284,121 @@
                 </article>
             </section>
 
-            <!-- ===== CERTIFICATIONS (placeholder) ===== -->
+                        <!-- ===== CERTIFICATIONS: click a card to see details (see main.js section 9) ===== -->
             <section class="section panel" id="certifications">
                 <h2 class="section-title">Certifications</h2>
-                <p class="placeholder">Coming soon.</p>
+
+                <div class="cert-grid">
+
+                    <button type="button" class="cert-card"
+                        data-name="AI Basics: Overview of AI"
+                        data-issuer="Huawei"
+                        data-date="Issued Sep 2025"
+                        data-id="ICTCRA20250929012492"
+                        data-link="https://drive.google.com/file/d/1phOv-Q7r3ZlLrowG6DepS9lazjuJkYDT/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-cpu"/></svg></span>
+                        <span class="cert-name">AI Basics: Overview of AI</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Sep 2025</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Basics of Network Layer Protocols Micro Certification"
+                        data-issuer="Huawei"
+                        data-date="Expires Nov 2027"
+                        data-id="03050102000120251124000310"
+                        data-link="https://drive.google.com/file/d/1NXQDG-OC5luZ7cSPZ3cMwROVyckoz2oO/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-network"/></svg></span>
+                        <span class="cert-name">Basics of Network Layer Protocols Micro Certification</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Expires Nov 2027</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Development and Basic Concepts of Cloud Computing"
+                        data-issuer="Huawei"
+                        data-date="Issued Jan 2026"
+                        data-id="ICT20260115012124"
+                        data-link="https://drive.google.com/file/d/1zUYM1k65_yfYYt8W67Nb0MUVFJ_UBWVm/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-cloud"/></svg></span>
+                        <span class="cert-name">Development and Basic Concepts of Cloud Computing</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Jan 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="HCIA-AI V4.0"
+                        data-desc="Huawei Certified ICT Associate - Artificial Intelligence"
+                        data-issuer="Huawei"
+                        data-date="Issued Dec 2025"
+                        data-id="ICT20251226003668"
+                        data-link="https://drive.google.com/file/d/1Y17SdEaCRvltDft9HWBBdwv4LQsZar0N/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-award"/></svg></span>
+                        <span class="cert-name">HCIA-AI V4.0</span>
+                        <span class="cert-desc">Huawei Certified ICT Associate - Artificial Intelligence</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Dec 2025</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="HCCDA-Tech Essentials"
+                        data-desc="Huawei Certified Cloud Digital Associate"
+                        data-issuer="Huawei"
+                        data-date="Issued Mar 2026"
+                        data-id="ICT20260316000014"
+                        data-link="https://drive.google.com/file/d/1QM0n_ar9CB4UUQiiP_jK3H-zjhBeBOFW/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-award"/></svg></span>
+                        <span class="cert-name">HCCDA-Tech Essentials</span>
+                        <span class="cert-desc">Huawei Certified Cloud Digital Associate</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Mar 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Microsoft Digital Literacy"
+                        data-issuer="TESDA (Technical Education and Skills Development Authority)"
+                        data-date="Issued Oct 2026"
+                        data-id="AQtLRUdHJV"
+                        data-link="https://drive.google.com/file/d/1wiZK57tKp0jOLnyqq2mdXQrvwg0-xoyK/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-monitor"/></svg></span>
+                        <span class="cert-name">Microsoft Digital Literacy</span>
+                        <span class="cert-issuer">TESDA</span>
+                        <span class="cert-date">Issued Oct 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Performing Data Recording and Reporting"
+                        data-issuer="TESDA (Technical Education and Skills Development Authority)"
+                        data-date="Issued Oct 2026"
+                        data-id="oc1dcKHQCT"
+                        data-link="https://drive.google.com/file/d/1wejbWrjBw1BxQ-p2PIcSnLqk3ZmfFEed/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-clipboard"/></svg></span>
+                        <span class="cert-name">Performing Data Recording and Reporting</span>
+                        <span class="cert-issuer">TESDA</span>
+                        <span class="cert-date">Issued Oct 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Practicing Data Privacy in the Workplace"
+                        data-issuer="TESDA (Technical Education and Skills Development Authority)"
+                        data-date="Issued Oct 2026"
+                        data-id="8mz4v5CGO8"
+                        data-link="https://drive.google.com/file/d/11CLp3nR4F0P-uAGHvacqmNStNk9VLyXI/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
+                        <span class="cert-name">Practicing Data Privacy in the Workplace</span>
+                        <span class="cert-issuer">TESDA</span>
+                        <span class="cert-date">Issued Oct 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                </div>
             </section>
 
             <!-- ===== EDUCATION (placeholder) ===== -->
@@ -299,7 +415,20 @@
 
         </main>
     </div>
-
+    <!-- CERTIFICATE POPUP: filled in by main.js when a certification card is clicked -->
+    <div class="modal" id="cert-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cert-modal-title">
+        <div class="modal-box cert-modal-box">
+            <button type="button" class="modal-close" id="cert-close" aria-label="Close">&times;</button>
+            <h2 class="modal-title" id="cert-modal-title"></h2>
+            <p class="cert-modal-desc" id="cert-modal-desc" hidden></p>
+            <dl class="cert-meta">
+                <div><dt>Issued by</dt><dd id="cert-modal-issuer"></dd></div>
+                <div><dt>Date</dt><dd id="cert-modal-date"></dd></div>
+                <div><dt>Credential ID</dt><dd id="cert-modal-id"></dd></div>
+            </dl>
+            <a class="btn btn-primary" id="cert-modal-link" target="_blank" rel="noopener">View certificate</a>
+        </div>
+    </div>
     <!-- EMAIL POPUP: opens when the email icon is clicked -->
     <div class="modal" id="email-modal" hidden role="dialog" aria-modal="true" aria-labelledby="email-modal-title">
         <div class="modal-box">

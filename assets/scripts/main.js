@@ -37,7 +37,9 @@ function showPanel(id) {
 
 // ---- 3. Clicks on any in-page link (sidebar, buttons, dashboard cards) ----
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
+    link.addEventListener("click", (event) => {
+    // Ignore links whose address has changed to something other than a page (like a Drive link)
+    if (!(link.getAttribute("href") || "").startsWith("#")) return;
     event.preventDefault();                      // stop the normal jump/scroll
     const id = link.getAttribute("href").slice(1);
     showPanel(id);
@@ -198,4 +200,48 @@ document.querySelectorAll(".slideshow").forEach((show) => {
 
   goTo(0);
   start();
+});
+// ---- 9. Certification popup: click a card to see its details and certificate link ----
+const certModal = document.getElementById("cert-modal");
+const certClose = document.getElementById("cert-close");
+let lastCertCard = null;   // remembers which card opened the popup, so focus can go back to it
+
+function openCertModal(card) {
+  lastCertCard = card;
+  const data = card.dataset;
+
+  document.getElementById("cert-modal-title").textContent = data.name;
+  document.getElementById("cert-modal-issuer").textContent = data.issuer;
+  document.getElementById("cert-modal-date").textContent = data.date;
+  document.getElementById("cert-modal-id").textContent = data.id;
+  document.getElementById("cert-modal-link").href = data.link;
+
+  // The short description only shows for cards that have one (data-desc)
+  const desc = document.getElementById("cert-modal-desc");
+  desc.textContent = data.desc || "";
+  desc.hidden = !data.desc;
+
+  certModal.hidden = false;
+  certClose.focus();
+}
+
+function closeCertModal() {
+  certModal.hidden = true;
+  if (lastCertCard) lastCertCard.focus();
+}
+
+document.querySelectorAll(".cert-card").forEach((card) => {
+  card.addEventListener("click", () => openCertModal(card));
+});
+
+certClose.addEventListener("click", closeCertModal);
+
+// Click the dark area outside the box to close
+certModal.addEventListener("click", (event) => {
+  if (event.target === certModal) closeCertModal();
+});
+
+// Press Esc to close
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !certModal.hidden) closeCertModal();
 });
