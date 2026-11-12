@@ -213,7 +213,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 }
 .home-headline {
   margin: 0 0 1rem;
-  max-width: 30ch;
+  max-width: 46ch;
   font-size: clamp(1.9rem, 3.4vw, 3.25rem);
   line-height: 1.15;
 }
@@ -311,6 +311,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .job-dates { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-accent-dark); }
 .job-list { margin: 0 0 1.5rem; padding-left: 1.4rem; font-size: 1.1rem; }
 .job-list li { margin-bottom: 0.8rem; }
+
 /* ===== 9B. EMAIL POPUP ===== */
 .modal {
   position: fixed;
@@ -375,6 +376,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   font-weight: 600;
   color: var(--color-accent-dark);
 }
+
 /* ===== 10. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
 @media (min-width: 1000px) {
   .sidebar {
@@ -408,27 +410,52 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   .social-links { justify-content: center; }
   .sidebar-footer { margin-top: auto; padding-top: 1.5rem; }
 
-  /* Content fills the space beside the sidebar */
+  /* Content area is exactly the screen height. Long pages scroll inside it. */
   .content {
     margin-left: var(--sidebar-width);
-    min-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
     display: flex;
-    align-items: center;
-    padding: 2.5rem clamp(2rem, 3.5vw, 3.5rem);
+    padding: clamp(1rem, 3vh, 2.5rem) clamp(2rem, 3.5vw, 3.5rem);
   }
-  .panel.is-active { width: 100%; }
+  .panel.is-active { width: 100%; margin: auto 0; }   /* centers short pages vertically */
 
-  /* Home fills the screen height so the cards stretch evenly */
+  /* ----- HOME: fits the screen height exactly. Sizes scale with window height (vh) ----- */
   .home.panel.is-active {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 5rem);
+    height: 100%;
+    margin: 0;
   }
+
+  .home-top { margin-bottom: clamp(0.75rem, 2vh, 1.75rem); }
+  .eyebrow { margin-bottom: clamp(0.35rem, 1vh, 0.85rem); }
+  .home-headline {
+    margin-bottom: clamp(0.4rem, 1.2vh, 1rem);
+    font-size: clamp(1.7rem, min(2.8vw, 5vh), 2.9rem);
+  }
+  .home-sub { font-size: clamp(1rem, 2vh, 1.15rem); }
+
+  .skills-strip {
+    padding: clamp(0.7rem, 1.8vh, 1.25rem) 1.75rem;
+    margin-bottom: clamp(0.75rem, 1.8vh, 1.5rem);
+  }
+
+  /* Cards share the remaining height. Rows never shrink below their content. */
   .bento {
     flex: 1;
+    min-height: 0;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(180px, 1fr);
+    grid-auto-rows: minmax(min-content, 1fr);
+    gap: clamp(0.75rem, 1.7vh, 1.25rem);
   }
+  .card { padding: clamp(0.9rem, 2.4vh, 1.75rem) 2rem; }
+  .card-label { margin-bottom: clamp(0.3rem, 1vh, 0.65rem); }
+  .card-title { font-size: clamp(1.15rem, 2.6vh, 1.4rem); }
+  .card-stat { font-size: clamp(1.9rem, 5vh, 2.75rem); }
+  .card-text { font-size: clamp(0.95rem, 2vh, 1.05rem); }
+  .mini-list { margin-top: clamp(0.4rem, 1.2vh, 1rem); }
+  .mini-list li { padding: clamp(0.45rem, 1.3vh, 0.85rem) 0; font-size: clamp(1rem, 2.1vh, 1.1rem); }
 
   /* Row 1: Projects (2 wide), Experience, Certifications. Row 2: Education + Contact (2 wide each) */
   .card-wide { grid-column: span 2; }
