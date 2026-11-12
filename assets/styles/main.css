@@ -240,6 +240,66 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
   text-transform: uppercase;
   color: var(--color-accent);
 }
+/* ----- Scrolling skills (marquee) ----- */
+.marquee {
+  flex: 1 1 260px;
+  min-width: 0;                    /* lets it shrink inside the strip */
+  overflow: hidden;
+  /* soft fade on the left and right edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;   /* bigger number = slower */
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }  /* pauses on hover */
+
+/* main.js adds a second copy of this group so the loop has no gap */
+.marquee-group {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0 0.75rem 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }            /* moves left by one full copy */
+}
+
+/* One skill: text on the left, icon on the right */
+.skill-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-accent-dark);
+  background: var(--color-tint);
+  border-radius: 999px;
+}
+.skill-icon {
+  order: -1;                       /* puts the icon on the left of the text */
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* Two strips stacked: tighter gap between them */
+.skills-strip:has(+ .skills-strip) { margin-bottom: 0.75rem; }
+
+/* Tools has fewer items, so a shorter time keeps the speed similar to Skills */
+.tools-strip .marquee-track { animation-duration: 32s; }
 
 /* Small rounded labels (used in several places) */
 .tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; }
@@ -471,6 +531,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 
 /* Respect people who turn off animations in their device settings */
 @media (prefers-reduced-motion: reduce) {
+    /* People who turn off animations get a still, wrapped list instead */
+  .marquee-track { animation: none; width: auto; }
+  .marquee-group { flex-wrap: wrap; }
+  .marquee-group[aria-hidden="true"] { display: none; }
   html { scroll-behavior: auto; }
   .btn, .card, .social-links a, .theme-toggle { transition: none; }
   .card:hover { transform: none; }
