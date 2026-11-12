@@ -1,4 +1,4 @@
-// main.js: shows one page at a time and handles the phone menu.
+// main.js: shows one page at a time, dark mode, email popup, scrolling strips, and photo slideshow.
 
 const sidebar = document.getElementById("sidebar");
 const menuToggle = document.getElementById("menu-toggle");
@@ -30,7 +30,9 @@ function showPanel(id) {
     link.classList.toggle("is-active", link.getAttribute("href") === "#" + id);
   });
 
-  window.scrollTo(0, 0); // start each page at the top
+  // Start each page at the top (the window on phones, the content area on desktop)
+  window.scrollTo(0, 0);
+  document.getElementById("main").scrollTop = 0;
 }
 
 // ---- 3. Clicks on any in-page link (sidebar, buttons, dashboard cards) ----
@@ -74,6 +76,7 @@ themeToggle.addEventListener("click", () => {
 });
 
 updateThemeButton();
+
 // ---- 6. Email popup: opens from the email icon, click the address to copy ----
 const emailButton = document.getElementById("email-button");
 const emailModal = document.getElementById("email-modal");
@@ -131,4 +134,68 @@ document.querySelectorAll(".marquee-track").forEach((track) => {
   const copy = track.firstElementChild.cloneNode(true);
   copy.setAttribute("aria-hidden", "true");   // screen readers skip the duplicate
   track.appendChild(copy);
+});
+
+// ---- 8. Photo slideshow: auto-changes, dots to jump, pauses on hover, swipe on phones ----
+document.querySelectorAll(".slideshow").forEach((show) => {
+  const slides = show.querySelectorAll(".slide");
+  const dotsBox = show.querySelector(".slide-dots");
+
+  const SECONDS = 4;   // how long each photo stays (change this number)
+  let index = 0;
+  let timer = null;
+  // Auto-play is off for people who asked their device to reduce motion
+  const autoplay = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Set up each slide: blurred backdrop from its own photo, plus one dot
+  slides.forEach((slide, i) => {
+    const img = slide.querySelector("img");
+    slide.style.setProperty("--bg", 'url("' + img.getAttribute("src") + '")');
+
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "slide-dot";
+    dot.setAttribute("aria-label", "Show photo " + (i + 1));
+    dot.addEventListener("click", () => { goTo(i); start(); });
+    dotsBox.appendChild(dot);
+  });
+  const dots = dotsBox.querySelectorAll(".slide-dot");
+
+  // Show one slide, hide the others, update the dots
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;   // wraps around at both ends
+    slides.forEach((slide, n) => {
+      slide.classList.toggle("is-active", n === index);
+      slide.setAttribute("aria-hidden", n !== index);
+    });
+    dots.forEach((dot, n) => {
+      dot.classList.toggle("is-active", n === index);
+      dot.setAttribute("aria-current", n === index);
+    });
+  }
+
+  // Auto-play timer
+  function stop() { clearInterval(timer); timer = null; }
+  function start() {
+    stop();
+    if (!autoplay) return;
+    timer = setInterval(() => {
+      if (show.offsetParent !== null) goTo(index + 1);   // only moves while this page is visible
+    }, SECONDS * 1000);
+  }
+
+  // Pause while a mouse is over the slideshow (touch taps don't count, so phones never get stuck)
+  show.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") stop(); });
+  show.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse") start(); });
+
+  // Swipe on touch screens
+  let touchStartX = 0;
+  show.addEventListener("touchstart", (event) => { touchStartX = event.touches[0].clientX; }, { passive: true });
+  show.addEventListener("touchend", (event) => {
+    const distance = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(distance) > 40) { goTo(index + (distance < 0 ? 1 : -1)); start(); }
+  });
+
+  goTo(0);
+  start();
 });

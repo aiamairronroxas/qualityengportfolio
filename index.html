@@ -20,7 +20,8 @@
 </head>
 
 <body>
-        <!-- ICON SHEET: stores the icons once; skills reuse them with <use> -->
+
+    <!-- ICON SHEET: stores the icons once; skills and tools reuse them with <use> -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
         <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
         <symbol id="i-check" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
@@ -37,7 +38,7 @@
         <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
         <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
         <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-                <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></symbol>
+        <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></symbol>
         <symbol id="i-branch" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
         <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="3" height="9"/><rect x="14" y="7" width="3" height="5"/></symbol>
         <symbol id="i-send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
@@ -47,6 +48,7 @@
         <symbol id="i-type" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></symbol>
         <symbol id="i-video" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></symbol>
     </svg>
+
     <div class="layout">
 
         <!-- SIDEBAR: left panel on desktop, top bar on phones -->
@@ -65,7 +67,8 @@
             </div>
 
             <div class="sidebar-menu" id="sidebar-menu">
-                                <!-- Icon-only buttons: Email, GitHub, LinkedIn, and the dark mode switch -->
+
+                <!-- Icon-only buttons: Email (opens a popup), GitHub, LinkedIn, and the dark mode switch -->
                 <div class="social-links">
                     <a href="mailto:aiamroxas.cpe@gmail.com" id="email-button" aria-label="Email" title="Email">
                         <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -124,8 +127,7 @@
                     </div>
                 </div>
 
-                <!-- Skills strip (all taken from the resume) -->
-                                <!-- Skills strip: scrolls left in a loop (all skills are from the resume) -->
+                <!-- Skills strip: scrolls left in a loop (all skills are from the resume) -->
                 <div class="skills-strip">
                     <p class="strip-label">Skills</p>
                     <div class="marquee">
@@ -152,7 +154,8 @@
                         </div>
                     </div>
                 </div>
-                                <!-- Tools strip: scrolls left in a loop, same style as Skills -->
+
+                <!-- Tools strip: scrolls left in a loop, same style as Skills -->
                 <div class="skills-strip tools-strip">
                     <p class="strip-label">Tools</p>
                     <div class="marquee">
@@ -248,6 +251,31 @@
                         <li>Troubleshooting</li>
                         <li>Records management</li>
                     </ul>
+
+                    <!-- PHOTO SLIDESHOW: one photo at a time, pauses on hover (see main.js section 8) -->
+                    <div class="slideshow" role="group" aria-roledescription="carousel" aria-label="Internship photos">
+                        <div class="slide-frame">
+                            <!-- Slide 1 shows first. Edit each alt text (read by screen readers). -->
+                            <figure class="slide is-active">
+                                <img src="assets/images/nestle-team.jpg" alt="Aiam with the Nestlé team in front of a brick wall displaying the company's values">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-laptop-migration.jpg" alt="Rows of laptops on tables showing Windows 11 setup screens during the migration" loading="lazy">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-photo-3.jpg" alt="Rows of office desks with laptops and monitors at the workplace" loading="lazy">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-photo-4.jpg" alt="EDIT: describe photo 4" loading="lazy">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-photo-5.jpg" alt="EDIT: describe photo 5" loading="lazy">
+                            </figure>
+                        </div>
+
+                        <!-- Dots are added by main.js -->
+                        <div class="slide-dots"></div>
+                    </div>
                 </article>
             </section>
 
@@ -271,7 +299,8 @@
 
         </main>
     </div>
-        <!-- EMAIL POPUP: opens when the email icon is clicked -->
+
+    <!-- EMAIL POPUP: opens when the email icon is clicked -->
     <div class="modal" id="email-modal" hidden role="dialog" aria-modal="true" aria-labelledby="email-modal-title">
         <div class="modal-box">
             <button type="button" class="modal-close" id="email-close" aria-label="Close">&times;</button>
@@ -281,6 +310,7 @@
             <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
         </div>
     </div>
+
     <script src="assets/scripts/main.js" defer></script>
 </body>
 
