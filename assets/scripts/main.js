@@ -125,3 +125,10 @@ copyEmail.addEventListener("click", async () => {
     copyStatus.textContent = "Press Ctrl + C to copy";
   }
 });
+
+// ---- 7. Marquees (Skills and Tools): copy each row once so the loop never has a gap ----
+document.querySelectorAll(".marquee-track").forEach((track) => {
+  const copy = track.firstElementChild.cloneNode(true);
+  copy.setAttribute("aria-hidden", "true");   // screen readers skip the duplicate
+  track.appendChild(copy);
+});
