@@ -253,3 +253,53 @@ document.querySelectorAll(".photo-track").forEach((track) => {
     track.appendChild(copy);
   }
 });
+// ---- 11. Project picture window: click the project card to see its pictures moving across a big window ----
+const projectCard = document.getElementById("project-card");
+const galleryModal = document.getElementById("gallery-modal");
+const galleryClose = document.getElementById("gallery-close");
+const galleryTrack = galleryModal.querySelector(".photo-track");
+
+// Keeps the scroll speed steady no matter how wide the pictures are
+const GALLERY_SPEED = 150;   // pixels per second (smaller = slower)
+function setGallerySpeed() {
+  const oneLoop = galleryTrack.scrollWidth / 2;   // the track holds 4 copies and moves by 2 each loop
+  if (oneLoop > 0) galleryTrack.style.animationDuration = oneLoop / GALLERY_SPEED + "s";
+}
+// Pictures load after the window opens, so update the speed as each one arrives
+galleryTrack.querySelectorAll("img").forEach((img) => img.addEventListener("load", setGallerySpeed));
+
+function openGallery() {
+  galleryModal.hidden = false;
+  galleryTrack.style.animationName = "none";   // restart the motion from the beginning
+  void galleryTrack.offsetWidth;
+  galleryTrack.style.animationName = "";
+  setGallerySpeed();
+  galleryClose.focus();
+}
+
+function closeGallery() {
+  galleryModal.hidden = true;
+  projectCard.focus();
+}
+
+projectCard.addEventListener("click", openGallery);
+
+// Keyboard: Enter or Space opens it too
+projectCard.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openGallery();
+  }
+});
+
+galleryClose.addEventListener("click", closeGallery);
+
+// Click the dark area outside the window to close
+galleryModal.addEventListener("click", (event) => {
+  if (event.target === galleryModal) closeGallery();
+});
+
+// Press Esc to close
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !galleryModal.hidden) closeGallery();
+});

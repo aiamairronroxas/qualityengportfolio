@@ -172,6 +172,9 @@
             <line x1="8" y1="21" x2="16" y2="21" />
             <line x1="12" y1="17" x2="12" y2="21" />
         </symbol>
+                <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+        <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+        <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
     </svg>
 
     <div class="layout">
@@ -407,45 +410,114 @@
                 </div>
 
                 <!-- Dashboard cards: each one opens its page -->
+                                <!-- Dashboard cards: icon + title + one short line. Each one opens its page. -->
                 <div class="bento">
 
-                    <a href="#projects" class="card card-wide">
-                        <p class="card-label">Projects</p>
-                        <p class="card-title">Sample QA work</p>
-                        <ol class="mini-list">
-                            <li><span>Test Plan</span><span class="num">01</span></li>
-                            <li><span>Test Cases with PASS/FAIL results</span><span class="num">02</span></li>
-                            <li><span>Sample Bug Report</span><span class="num">03</span></li>
-                        </ol>
+                    <a href="#projects" class="card card-projects">
+                        <div class="card-copy">
+                            <div class="card-head">
+                                <span class="card-icon"><svg aria-hidden="true"><use href="#i-folder"/></svg></span>
+                                <span class="card-name">Projects</span>
+                            </div>
+                            <p class="card-desc">Thesis project with test results and an iteration log.</p>
+                        </div>
+
+                        <!-- Preview of what's inside (decorative, built from the thesis content) -->
+                        <div class="card-preview" aria-hidden="true">
+                            <div class="mini-window">
+                                <div class="mini-dots"><span></span><span></span><span></span></div>
+                                <p class="mini-title">ETCH-IT</p>
+                                <p class="mini-sub">Raspberry Pi-controlled PCB etching and drilling</p>
+                                <div class="mini-chips"><span>1.6479% pad error</span><span>4.522 evaluation</span></div>
+                            </div>
+                            <div class="mini-window">
+                                <div class="mini-dots"><span></span><span></span><span></span></div>
+                                <p class="mini-title">Iteration log</p>
+                                <div class="mini-row"><span>Iteration 1</span><span>Lead-screw redesign</span></div>
+                                <div class="mini-row"><span>Iteration 2</span><span>Pico W controller</span></div>
+                                <div class="mini-row"><span>Iteration 3</span><span>Separate bits</span></div>
+                            </div>
+                        </div>
                     </a>
 
-                    <a href="#experience" class="card">
-                        <p class="card-label">Experience</p>
-                        <p class="card-stat">1,000+</p>
-                        <p class="card-text">laptops verified during a Windows 11 migration at Nestlé Philippines.</p>
+                    <a href="#experience" class="card card-exp">
+                        <div class="card-head">
+                            <span class="card-icon"><svg aria-hidden="true"><use href="#i-briefcase"/></svg></span>
+                            <span class="card-name">Experience</span>
+                        </div>
+                        <p class="card-desc">IT internship at Nestlé Philippines.</p>
+                        <ul class="card-list">
+                            <li><span class="li-icon"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Verification<span class="num">01</span></li>
+                            <li><span class="li-icon"><svg aria-hidden="true"><use href="#i-clipboard"/></svg></span>Documentation<span class="num">02</span></li>
+                            <li><span class="li-icon"><svg aria-hidden="true"><use href="#i-wrench"/></svg></span>Troubleshooting<span class="num">03</span></li>
+                        </ul>
                     </a>
 
-                    <a href="#certifications" class="card">
-                        <p class="card-label">Certifications</p>
-                        <p class="card-stat">8</p>
-                        <p class="card-text">including Data Privacy, Data Recording and Reporting, and Microsoft Digital
-                            Literacy.</p>
+                    <a href="#certifications" class="card card-cert">
+                        <div class="card-head">
+                            <span class="card-icon"><svg aria-hidden="true"><use href="#i-award"/></svg></span>
+                            <span class="card-name">Certifications</span>
+                        </div>
+                        <p class="card-desc">Huawei and TESDA certifications.</p>
+                        <ul class="tag-list">
+                            <li>8 certificates</li>
+                            <li>Huawei</li>
+                            <li>TESDA</li>
+                        </ul>
                     </a>
 
-                    <a href="#education" class="card">
-                        <p class="card-label">Education</p>
-                        <p class="card-title">BS Computer Engineering</p>
-                        <p class="card-text">Bulacan State University · Magna Cum Laude, 1.34 GWA.</p>
+                    <a href="#education" class="card card-edu">
+                        <div class="card-head">
+                            <span class="card-icon"><svg aria-hidden="true"><use href="#i-book"/></svg></span>
+                            <span class="card-name">Education</span>
+                        </div>
+                        <p class="card-desc">BS Computer Engineering, Bulacan State University.</p>
+                        <ul class="tag-list">
+                            <li>Magna Cum Laude</li>
+                            <li>1.34 GWA</li>
+                            <li>Dean's Lister</li>
+                        </ul>
                     </a>
 
                 </div>
             </section>
 
-            <!-- ===== PROJECTS (placeholder) ===== -->
+                       <!-- ===== PROJECTS ===== -->
             <section class="section panel" id="projects">
                 <h2 class="section-title">Projects</h2>
-                <p class="placeholder">Coming next: test plan, test cases with PASS/FAIL results, and a sample bug
-                    report.</p>
+
+                <!-- Click (or press Enter on) this card to open the picture window (see main.js section 11) -->
+                <article class="job-card project-card" id="project-card" tabindex="0" role="button" aria-haspopup="dialog">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">ETCH-IT: Raspberry Pi-Controlled PCB Etching and Drilling Device</h3>
+                            <p class="job-company">BS Computer Engineering group thesis · Bulacan State University</p>
+                        </div>
+                        <p class="job-dates">2026</p>
+                    </div>
+
+                    <p class="project-role"><strong>My role:</strong> software, testing and data gathering, and documentation. Teammates built the hardware.</p>
+
+                    <ul class="job-list">
+                        <li><strong>SDLC:</strong> Followed an Embedded System Development Life Cycle using the iterative model, which repeats the waterfall phases (requirements, design, implementation, testing, evaluation) every round. It is the same build, test, and feedback loop that Agile is built on.</li>
+                        <li><strong>Requirements:</strong> Defined 10 functional requirements and built the Python application that interprets Gerber files and generates G-code, with a preview to verify files before the machine runs. Version-controlled on GitHub (branches v1 to v16) with patch notes.</li>
+                        <li><strong>Test procedures and records:</strong> Final testing followed a step-by-step procedure with five timestamped trials per test. Expected vs. actual values were recorded in tables, and photos of the trial outputs were kept as evidence.</li>
+                        <li><strong>Issues and fixes:</strong> Testing in each of the three iterations surfaced an issue that was documented with its fix: an overweight two-spindle design, weak controller signals, and one bit doing two jobs.</li>
+                        <li><strong>Quality criteria:</strong> Evaluated against ISO/IEC 25010 (functionality, accuracy, efficiency, reliability, maintainability) with 30 respondents: <strong>4.522</strong> overall mean.</li>
+                    </ul>
+
+                    <ul class="tag-list">
+                        <li>SDLC</li>
+                        <li>Iterative model</li>
+                        <li>Test records</li>
+                        <li>Issue log</li>
+                        <li>ISO/IEC 25010</li>
+                        <li>Python</li>
+                        <li>GitHub</li>
+                    </ul>
+
+                    <p class="project-hint">View pictures &rarr;</p>
+                </article>
             </section>
 
             <!-- ===== EXPERIENCE ===== -->
@@ -668,6 +740,33 @@
             </section>
 
         </main>
+    </div>
+           <!-- PROJECT PICTURE WINDOW: opens when the project card is clicked (see main.js section 11) -->
+    <div class="modal" id="gallery-modal" hidden role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+        <div class="modal-box gallery-box">
+            <button type="button" class="modal-close" id="gallery-close" aria-label="Close">&times;</button>
+            <h2 class="modal-title" id="gallery-title">ETCH-IT in pictures</h2>
+
+            <!-- Same moving row as Education. Each picture keeps its own shape. -->
+            <div class="photo-marquee gallery-marquee" role="group" aria-label="ETCH-IT project pictures">
+                <div class="photo-track">
+                    <ul class="photo-group">
+                        <!-- Edit each alt text. Set width and height to your image's real size (it still works if they are a bit off). Add or remove items as needed. -->
+                        <li class="photo-card gallery-card"><img src="assets/images/etchit-1.jpg" alt="EDIT: describe picture 1" width="1600" height="1000" loading="lazy"></li>
+                        <li class="photo-card gallery-card"><img src="assets/images/etchit-2.jpg" alt="EDIT: describe picture 2" width="1600" height="1000" loading="lazy"></li>
+                        <li class="photo-card gallery-card"><img src="assets/images/etchit-3.jpg" alt="EDIT: describe picture 3" width="1600" height="1000" loading="lazy"></li>
+                        <li class="photo-card gallery-card"><img src="assets/images/etchit-4.jpg" alt="EDIT: describe picture 4" width="1600" height="1000" loading="lazy"></li>
+                        <li class="photo-card gallery-card"><img src="assets/images/etchit-5.jpg" alt="EDIT: describe picture 5" width="1600" height="1000" loading="lazy"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <!-- Dots are added by main.js -->
+                <div class="slide-dots"></div>
+            </div>
+        </div>
     </div>
     <!-- CERTIFICATE POPUP: filled in by main.js when a certification card is clicked -->
     <div class="modal" id="cert-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cert-modal-title">
