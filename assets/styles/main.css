@@ -513,7 +513,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .photo-track {
   display: flex;
   width: max-content;
-  animation: photo-scroll 90s linear infinite;   /* bigger number = slower */
+    animation: photo-scroll 115s linear infinite;  /* bigger number = slower */
 }
 /* Pause while a mouse is over the carousel (not on touch screens, so phones never get stuck) */
 @media (hover: hover) {
