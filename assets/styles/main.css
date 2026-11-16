@@ -660,7 +660,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); ou
 .gallery-box .modal-title { margin-bottom: 0; padding: 0 4rem 0 1.75rem; }   /* keeps the title clear of the X */
 
 .flat-carousel { --card-h: clamp(200px, min(50vh, 46vw), 500px); margin-top: 0.75rem; }   /* picture height */
-
+/* Flat carousel inside the Experience card */
+.job-card .flat-carousel { margin-top: 1.5rem; }
+.flat-inline { --card-h: clamp(190px, min(36vh, 34vw), 360px); }   /* smaller than the popup's pictures */
+.flat-carousel:focus { outline: none; }
 .flat-stage { position: relative; height: calc(var(--card-h) + 3rem); overflow: hidden; }
 
 /* Each picture sits in the same 16:10 frame, so any picture shape fits */

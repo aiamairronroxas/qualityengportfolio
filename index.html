@@ -554,30 +554,22 @@
                         <li>Records management</li>
                     </ul>
 
-                    <!-- PHOTO SLIDESHOW: one photo at a time, pauses on hover (see main.js section 8) -->
-                    <div class="slideshow" role="group" aria-roledescription="carousel" aria-label="Internship photos">
-                        <div class="slide-frame">
-                            <!-- Slide 1 shows first. Edit each alt text (read by screen readers). -->
-                            <figure class="slide is-active">
-                                <img src="assets/images/nestle-team.jpg"
-                                    alt="Aiam with the Nestlé team in front of a brick wall displaying the company's values">
-                            </figure>
-                            <figure class="slide">
-                                <img src="assets/images/nestle-laptop-migration.jpg"
-                                    alt="Rows of laptops on tables showing Windows 11 setup screens during the migration"
-                                    loading="lazy">
-                            </figure>
-                            <figure class="slide">
-                                <img src="assets/images/nestle-photo-3.jpg"
-                                    alt="Rows of office desks with laptops and monitors at the workplace"
-                                    loading="lazy">
-                            </figure>
-                            <figure class="slide">
-                                <img src="assets/images/nestle-photo-4.jpg" alt="EDIT: describe photo 4" loading="lazy">
-                            </figure>
-                            <figure class="slide">
-                                <img src="assets/images/nestle-photo-5.jpg" alt="EDIT: describe photo 5" loading="lazy">
-                            </figure>
+                                        <!-- PHOTO CAROUSEL: middle picture big, neighbors smaller (see main.js section 8) -->
+                    <div class="flat-carousel flat-inline" role="group" aria-roledescription="carousel" aria-label="Internship photos">
+                        <div class="flat-stage">
+                            <!-- Edit each alt text. Add or remove <figure> blocks as needed. -->
+                            <figure class="flat-card"><img src="assets/images/nestle-team.jpg" alt="Aiam with the Nestlé team in front of a brick wall displaying the company's values"></figure>
+                            <figure class="flat-card"><img src="assets/images/nestle-laptop-migration.jpg" alt="Rows of laptops on tables showing Windows 11 setup screens during the migration" loading="lazy"></figure>
+                            <figure class="flat-card"><img src="assets/images/nestle-photo-3.jpg" alt="Rows of office desks with laptops and monitors at the workplace" loading="lazy"></figure>
+                            <figure class="flat-card"><img src="assets/images/nestle-photo-4.jpg" alt="EDIT: describe photo 4" loading="lazy"></figure>
+                            <figure class="flat-card"><img src="assets/images/nestle-photo-5.jpg" alt="EDIT: describe photo 5" loading="lazy"></figure>
+
+                            <button type="button" class="flat-arrow flat-prev" aria-label="Previous picture">
+                                <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                            </button>
+                            <button type="button" class="flat-arrow flat-next" aria-label="Next picture">
+                                <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
                         </div>
 
                         <!-- Dots are added by main.js -->

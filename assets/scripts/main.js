@@ -138,68 +138,107 @@ document.querySelectorAll(".marquee-track").forEach((track) => {
   track.appendChild(copy);
 });
 
-// ---- 8. Photo slideshow: auto-changes, dots to jump, pauses on hover, swipe on phones ----
-document.querySelectorAll(".slideshow").forEach((show) => {
-  const slides = show.querySelectorAll(".slide");
-  const dotsBox = show.querySelector(".slide-dots");
+// ---- 8. Flat carousels: the Experience photos and the project picture window ----
+// Middle picture big, neighbors smaller, Back and Next buttons, dots, and an automatic change every few seconds.
+const FLAT_SECONDS = 2;   // time between automatic changes (change this number)
+// Auto-change is off for people who asked their device to reduce motion
+const flatAutoplay = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const SECONDS = 4;   // how long each photo stays (change this number)
+function setupFlatCarousel(root) {
+  const cards = root.querySelectorAll(".flat-card");
+  const dotsBox = root.querySelector(".slide-dots");
   let index = 0;
   let timer = null;
-  // Auto-play is off for people who asked their device to reduce motion
-  const autoplay = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Set up each slide: blurred backdrop from its own photo, plus one dot
-  slides.forEach((slide, i) => {
-    const img = slide.querySelector("img");
-    slide.style.setProperty("--bg", 'url("' + img.getAttribute("src") + '")');
+  // Set up each picture: a blurred backdrop from its own image, a dot, and click-to-center
+  cards.forEach((card, i) => {
+    const img = card.querySelector("img");
+    card.style.setProperty("--bg", 'url("' + img.getAttribute("src") + '")');
+
+    card.addEventListener("click", () => { if (card.dataset.pos !== "0") { goTo(i); start(); } });
 
     const dot = document.createElement("button");
     dot.type = "button";
     dot.className = "slide-dot";
-    dot.setAttribute("aria-label", "Show photo " + (i + 1));
+    dot.setAttribute("aria-label", "Show picture " + (i + 1));
     dot.addEventListener("click", () => { goTo(i); start(); });
     dotsBox.appendChild(dot);
   });
   const dots = dotsBox.querySelectorAll(".slide-dot");
 
-  // Show one slide, hide the others, update the dots
-  function goTo(i) {
-    index = (i + slides.length) % slides.length;   // wraps around at both ends
-    slides.forEach((slide, n) => {
-      slide.classList.toggle("is-active", n === index);
-      slide.setAttribute("aria-hidden", n !== index);
+  // Give every picture its position relative to the one in the middle
+  function layout() {
+    const n = cards.length;
+    cards.forEach((card, i) => {
+      let d = (i - index + n) % n;
+      if (d > n / 2) d -= n;                        // shortest way around: ... -2 -1 0 1 2 ...
+      const pos = Math.max(-3, Math.min(3, d));
+      const before = Number(card.dataset.pos);
+
+      // A picture jumping from one far side to the other would sweep across the middle: skip its animation
+      if (!Number.isNaN(before) && Math.abs(pos - before) > 2) {
+        card.classList.add("no-anim");
+        card.dataset.pos = pos;
+        void card.offsetWidth;                      // makes the browser apply it right away
+        card.classList.remove("no-anim");
+      } else {
+        card.dataset.pos = pos;
+      }
+      card.setAttribute("aria-hidden", pos !== 0);
     });
-    dots.forEach((dot, n) => {
-      dot.classList.toggle("is-active", n === index);
-      dot.setAttribute("aria-current", n === index);
+    dots.forEach((dot, k) => {
+      dot.classList.toggle("is-active", k === index);
+      dot.setAttribute("aria-current", k === index);
     });
   }
 
-  // Auto-play timer
+  function goTo(i) {
+    index = (i + cards.length) % cards.length;      // wraps around at both ends
+    layout();
+  }
+
+  // Automatic change (only while the carousel is on screen)
   function stop() { clearInterval(timer); timer = null; }
   function start() {
     stop();
-    if (!autoplay) return;
+    if (!flatAutoplay) return;
     timer = setInterval(() => {
-      if (show.offsetParent !== null) goTo(index + 1);   // only moves while this page is visible
-    }, SECONDS * 1000);
+      if (root.offsetParent !== null) goTo(index + 1);
+    }, FLAT_SECONDS * 1000);
   }
 
-  // Pause while a mouse is over the slideshow (touch taps don't count, so phones never get stuck)
-  show.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") stop(); });
-  show.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse") start(); });
+  // Back and Next buttons
+  root.querySelector(".flat-prev").addEventListener("click", () => { goTo(index - 1); start(); });
+  root.querySelector(".flat-next").addEventListener("click", () => { goTo(index + 1); start(); });
+
+  // Pause while a mouse is over the carousel (touch taps don't count, so phones never get stuck)
+  root.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") stop(); });
+  root.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse") start(); });
+
+  // Left and Right arrow keys while the carousel has focus
+  root.tabIndex = -1;
+  root.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") { goTo(index - 1); start(); }
+    if (event.key === "ArrowRight") { goTo(index + 1); start(); }
+  });
 
   // Swipe on touch screens
-  let touchStartX = 0;
-  show.addEventListener("touchstart", (event) => { touchStartX = event.touches[0].clientX; }, { passive: true });
-  show.addEventListener("touchend", (event) => {
-    const distance = event.changedTouches[0].clientX - touchStartX;
+  let touchX = 0;
+  root.addEventListener("touchstart", (event) => { touchX = event.touches[0].clientX; }, { passive: true });
+  root.addEventListener("touchend", (event) => {
+    const distance = event.changedTouches[0].clientX - touchX;
     if (Math.abs(distance) > 40) { goTo(index + (distance < 0 ? 1 : -1)); start(); }
   });
 
   goTo(0);
   start();
+  return { root, goTo, start, stop };
+}
+
+// Set up every flat carousel on the page (keeps them so the project window can control its own)
+const flatControllers = new Map();
+document.querySelectorAll(".flat-carousel").forEach((root) => {
+  flatControllers.set(root, setupFlatCarousel(root));
 });
 // ---- 9. Certification popup: click a card to see its details and certificate link ----
 const certModal = document.getElementById("cert-modal");
@@ -253,110 +292,22 @@ document.querySelectorAll(".photo-track").forEach((track) => {
     track.appendChild(copy);
   }
 });
-// ---- 11. Project picture window: flat carousel (middle picture big, neighbors smaller) ----
+// ---- 11. Project picture window: opens a big popup holding a flat carousel ----
 const projectCard = document.getElementById("project-card");
 const galleryModal = document.getElementById("gallery-modal");
 const galleryClose = document.getElementById("gallery-close");
-const flat = galleryModal.querySelector(".flat-carousel");
-const flatCards = flat.querySelectorAll(".flat-card");
-const flatDotsBox = flat.querySelector(".slide-dots");
-
-const FLAT_SECONDS = 2;   // time between automatic changes (change this number)
-let flatIndex = 0;
-let flatTimer = null;
-// Auto-change is off for people who asked their device to reduce motion
-const flatAutoplay = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// Set up each picture: a blurred backdrop from its own image, a dot, and click-to-center
-flatCards.forEach((card, i) => {
-  const img = card.querySelector("img");
-  card.style.setProperty("--bg", 'url("' + img.getAttribute("src") + '")');
-
-  card.addEventListener("click", () => { if (card.dataset.pos !== "0") { goFlat(i); startFlat(); } });
-
-  const dot = document.createElement("button");
-  dot.type = "button";
-  dot.className = "slide-dot";
-  dot.setAttribute("aria-label", "Show picture " + (i + 1));
-  dot.addEventListener("click", () => { goFlat(i); startFlat(); });
-  flatDotsBox.appendChild(dot);
-});
-const flatDots = flatDotsBox.querySelectorAll(".slide-dot");
-
-// Give every picture its position relative to the one in the middle
-function layoutFlat() {
-  const n = flatCards.length;
-  flatCards.forEach((card, i) => {
-    let d = (i - flatIndex + n) % n;
-    if (d > n / 2) d -= n;                          // shortest way around: ... -2 -1 0 1 2 ...
-    const pos = Math.max(-3, Math.min(3, d));
-    const before = Number(card.dataset.pos);
-
-    // A picture jumping from one far side to the other would sweep across the middle: skip its animation
-    if (!Number.isNaN(before) && Math.abs(pos - before) > 2) {
-      card.classList.add("no-anim");
-      card.dataset.pos = pos;
-      void card.offsetWidth;                        // makes the browser apply it right away
-      card.classList.remove("no-anim");
-    } else {
-      card.dataset.pos = pos;
-    }
-    card.setAttribute("aria-hidden", pos !== 0);
-  });
-  flatDots.forEach((dot, n2) => {
-    dot.classList.toggle("is-active", n2 === flatIndex);
-    dot.setAttribute("aria-current", n2 === flatIndex);
-  });
-}
-
-function goFlat(i) {
-  flatIndex = (i + flatCards.length) % flatCards.length;   // wraps around at both ends
-  layoutFlat();
-}
-
-// Automatic change (only while the window is open)
-function stopFlat() { clearInterval(flatTimer); flatTimer = null; }
-function startFlat() {
-  stopFlat();
-  if (!flatAutoplay) return;
-  flatTimer = setInterval(() => {
-    if (!galleryModal.hidden) goFlat(flatIndex + 1);
-  }, FLAT_SECONDS * 1000);
-}
-
-// Back and Next buttons
-flat.querySelector(".flat-prev").addEventListener("click", () => { goFlat(flatIndex - 1); startFlat(); });
-flat.querySelector(".flat-next").addEventListener("click", () => { goFlat(flatIndex + 1); startFlat(); });
-
-// Pause while a mouse is over the carousel (touch taps don't count, so phones never get stuck)
-flat.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") stopFlat(); });
-flat.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse" && !galleryModal.hidden) startFlat(); });
-
-// Left and Right arrow keys while the window is open
-document.addEventListener("keydown", (event) => {
-  if (galleryModal.hidden) return;
-  if (event.key === "ArrowLeft") { goFlat(flatIndex - 1); startFlat(); }
-  if (event.key === "ArrowRight") { goFlat(flatIndex + 1); startFlat(); }
-});
-
-// Swipe on touch screens
-let flatTouchX = 0;
-flat.addEventListener("touchstart", (event) => { flatTouchX = event.touches[0].clientX; }, { passive: true });
-flat.addEventListener("touchend", (event) => {
-  const distance = event.changedTouches[0].clientX - flatTouchX;
-  if (Math.abs(distance) > 40) { goFlat(flatIndex + (distance < 0 ? 1 : -1)); startFlat(); }
-});
+const galleryFlat = flatControllers.get(galleryModal.querySelector(".flat-carousel"));
 
 function openGallery() {
   galleryModal.hidden = false;
-  goFlat(0);                    // always start from the first picture
-  startFlat();
-  galleryClose.focus();
+  galleryFlat.goTo(0);          // always start from the first picture
+  galleryFlat.start();
+  galleryFlat.root.focus();     // so the Left and Right arrow keys work right away
 }
 
 function closeGallery() {
   galleryModal.hidden = true;
-  stopFlat();
+  galleryFlat.stop();
   projectCard.focus();
 }
 
@@ -381,5 +332,3 @@ galleryModal.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !galleryModal.hidden) closeGallery();
 });
-
-goFlat(0);   // set the starting positions
