@@ -253,38 +253,116 @@ document.querySelectorAll(".photo-track").forEach((track) => {
     track.appendChild(copy);
   }
 });
-// ---- 11. Project picture window: click the project card to see its pictures moving across a big window ----
+// ---- 11. Project picture window: flat carousel (middle picture big, neighbors smaller) ----
 const projectCard = document.getElementById("project-card");
 const galleryModal = document.getElementById("gallery-modal");
 const galleryClose = document.getElementById("gallery-close");
-const galleryTrack = galleryModal.querySelector(".photo-track");
+const flat = galleryModal.querySelector(".flat-carousel");
+const flatCards = flat.querySelectorAll(".flat-card");
+const flatDotsBox = flat.querySelector(".slide-dots");
 
-// Keeps the scroll speed steady no matter how wide the pictures are
-const GALLERY_SPEED = 150;   // pixels per second (smaller = slower)
-function setGallerySpeed() {
-  const oneLoop = galleryTrack.scrollWidth / 2;   // the track holds 4 copies and moves by 2 each loop
-  if (oneLoop > 0) galleryTrack.style.animationDuration = oneLoop / GALLERY_SPEED + "s";
+const FLAT_SECONDS = 2;   // time between automatic changes (change this number)
+let flatIndex = 0;
+let flatTimer = null;
+// Auto-change is off for people who asked their device to reduce motion
+const flatAutoplay = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Set up each picture: a blurred backdrop from its own image, a dot, and click-to-center
+flatCards.forEach((card, i) => {
+  const img = card.querySelector("img");
+  card.style.setProperty("--bg", 'url("' + img.getAttribute("src") + '")');
+
+  card.addEventListener("click", () => { if (card.dataset.pos !== "0") { goFlat(i); startFlat(); } });
+
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.className = "slide-dot";
+  dot.setAttribute("aria-label", "Show picture " + (i + 1));
+  dot.addEventListener("click", () => { goFlat(i); startFlat(); });
+  flatDotsBox.appendChild(dot);
+});
+const flatDots = flatDotsBox.querySelectorAll(".slide-dot");
+
+// Give every picture its position relative to the one in the middle
+function layoutFlat() {
+  const n = flatCards.length;
+  flatCards.forEach((card, i) => {
+    let d = (i - flatIndex + n) % n;
+    if (d > n / 2) d -= n;                          // shortest way around: ... -2 -1 0 1 2 ...
+    const pos = Math.max(-3, Math.min(3, d));
+    const before = Number(card.dataset.pos);
+
+    // A picture jumping from one far side to the other would sweep across the middle: skip its animation
+    if (!Number.isNaN(before) && Math.abs(pos - before) > 2) {
+      card.classList.add("no-anim");
+      card.dataset.pos = pos;
+      void card.offsetWidth;                        // makes the browser apply it right away
+      card.classList.remove("no-anim");
+    } else {
+      card.dataset.pos = pos;
+    }
+    card.setAttribute("aria-hidden", pos !== 0);
+  });
+  flatDots.forEach((dot, n2) => {
+    dot.classList.toggle("is-active", n2 === flatIndex);
+    dot.setAttribute("aria-current", n2 === flatIndex);
+  });
 }
-// Pictures load after the window opens, so update the speed as each one arrives
-galleryTrack.querySelectorAll("img").forEach((img) => img.addEventListener("load", setGallerySpeed));
+
+function goFlat(i) {
+  flatIndex = (i + flatCards.length) % flatCards.length;   // wraps around at both ends
+  layoutFlat();
+}
+
+// Automatic change (only while the window is open)
+function stopFlat() { clearInterval(flatTimer); flatTimer = null; }
+function startFlat() {
+  stopFlat();
+  if (!flatAutoplay) return;
+  flatTimer = setInterval(() => {
+    if (!galleryModal.hidden) goFlat(flatIndex + 1);
+  }, FLAT_SECONDS * 1000);
+}
+
+// Back and Next buttons
+flat.querySelector(".flat-prev").addEventListener("click", () => { goFlat(flatIndex - 1); startFlat(); });
+flat.querySelector(".flat-next").addEventListener("click", () => { goFlat(flatIndex + 1); startFlat(); });
+
+// Pause while a mouse is over the carousel (touch taps don't count, so phones never get stuck)
+flat.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") stopFlat(); });
+flat.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse" && !galleryModal.hidden) startFlat(); });
+
+// Left and Right arrow keys while the window is open
+document.addEventListener("keydown", (event) => {
+  if (galleryModal.hidden) return;
+  if (event.key === "ArrowLeft") { goFlat(flatIndex - 1); startFlat(); }
+  if (event.key === "ArrowRight") { goFlat(flatIndex + 1); startFlat(); }
+});
+
+// Swipe on touch screens
+let flatTouchX = 0;
+flat.addEventListener("touchstart", (event) => { flatTouchX = event.touches[0].clientX; }, { passive: true });
+flat.addEventListener("touchend", (event) => {
+  const distance = event.changedTouches[0].clientX - flatTouchX;
+  if (Math.abs(distance) > 40) { goFlat(flatIndex + (distance < 0 ? 1 : -1)); startFlat(); }
+});
 
 function openGallery() {
   galleryModal.hidden = false;
-  galleryTrack.style.animationName = "none";   // restart the motion from the beginning
-  void galleryTrack.offsetWidth;
-  galleryTrack.style.animationName = "";
-  setGallerySpeed();
+  goFlat(0);                    // always start from the first picture
+  startFlat();
   galleryClose.focus();
 }
 
 function closeGallery() {
   galleryModal.hidden = true;
+  stopFlat();
   projectCard.focus();
 }
 
 projectCard.addEventListener("click", openGallery);
 
-// Keyboard: Enter or Space opens it too
+// Keyboard: Enter or Space on the project card opens it too
 projectCard.addEventListener("keydown", (event) => {
   if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
@@ -303,3 +381,5 @@ galleryModal.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !galleryModal.hidden) closeGallery();
 });
+
+goFlat(0);   // set the starting positions

@@ -741,24 +741,32 @@
 
         </main>
     </div>
-           <!-- PROJECT PICTURE WINDOW: opens when the project card is clicked (see main.js section 11) -->
+        <!-- PROJECT PICTURE WINDOW: opens when the project card is clicked (see main.js section 11) -->
     <div class="modal" id="gallery-modal" hidden role="dialog" aria-modal="true" aria-labelledby="gallery-title">
         <div class="modal-box gallery-box">
             <button type="button" class="modal-close" id="gallery-close" aria-label="Close">&times;</button>
             <h2 class="modal-title" id="gallery-title">ETCH-IT in pictures</h2>
 
-            <!-- Same moving row as Education. Each picture keeps its own shape. -->
-            <div class="photo-marquee gallery-marquee" role="group" aria-label="ETCH-IT project pictures">
-                <div class="photo-track">
-                    <ul class="photo-group">
-                        <!-- Edit each alt text. Set width and height to your image's real size (it still works if they are a bit off). Add or remove items as needed. -->
-                        <li class="photo-card gallery-card"><img src="assets/images/etchit-1.jpg" alt="EDIT: describe picture 1" width="1600" height="1000" loading="lazy"></li>
-                        <li class="photo-card gallery-card"><img src="assets/images/etchit-2.jpg" alt="EDIT: describe picture 2" width="1600" height="1000" loading="lazy"></li>
-                        <li class="photo-card gallery-card"><img src="assets/images/etchit-3.jpg" alt="EDIT: describe picture 3" width="1600" height="1000" loading="lazy"></li>
-                        <li class="photo-card gallery-card"><img src="assets/images/etchit-4.jpg" alt="EDIT: describe picture 4" width="1600" height="1000" loading="lazy"></li>
-                        <li class="photo-card gallery-card"><img src="assets/images/etchit-5.jpg" alt="EDIT: describe picture 5" width="1600" height="1000" loading="lazy"></li>
-                    </ul>
+            <!-- Flat carousel: the middle picture is big, the ones beside it are smaller -->
+            <div class="flat-carousel" role="group" aria-roledescription="carousel" aria-label="ETCH-IT project pictures">
+                <div class="flat-stage">
+                    <!-- Edit each alt text. Add or remove <figure> blocks as needed. -->
+                    <figure class="flat-card"><img src="assets/images/etchit-1.jpg" alt="EDIT: describe picture 1" loading="lazy"></figure>
+                    <figure class="flat-card"><img src="assets/images/etchit-2.jpg" alt="EDIT: describe picture 2" loading="lazy"></figure>
+                    <figure class="flat-card"><img src="assets/images/etchit-3.jpg" alt="EDIT: describe picture 3" loading="lazy"></figure>
+                    <figure class="flat-card"><img src="assets/images/etchit-4.jpg" alt="EDIT: describe picture 4" loading="lazy"></figure>
+                    <figure class="flat-card"><img src="assets/images/etchit-5.jpg" alt="EDIT: describe picture 5" loading="lazy"></figure>
+
+                    <button type="button" class="flat-arrow flat-prev" aria-label="Previous picture">
+                        <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button type="button" class="flat-arrow flat-next" aria-label="Next picture">
+                        <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
                 </div>
+
+                <!-- Dots are added by main.js -->
+                <div class="slide-dots"></div>
             </div>
         </div>
     </div>
