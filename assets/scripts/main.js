@@ -140,7 +140,7 @@ document.querySelectorAll(".marquee-track").forEach((track) => {
 
 // ---- 8. Flat carousels: the Experience photos and the project picture window ----
 // Middle picture big, neighbors smaller, Back and Next buttons, dots, and an automatic change every few seconds.
-const FLAT_SECONDS = 2;   // time between automatic changes (change this number)
+const FLAT_SECONDS = 1.5;   // time between automatic changes (change this number)
 // Auto-change is off for people who asked their device to reduce motion
 const flatAutoplay = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
